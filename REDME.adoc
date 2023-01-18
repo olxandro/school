@@ -23,11 +23,11 @@
 
 **Шаг 2**
 
-1. Создать каталоги model, service, controller в пакете ru.hogwarts.school. В model создать два класса: Student, Faculty.
+1. Создать каталоги model, service, controller в пакете ru.hogwarts.school. В model создать два класса: Student, Student.
 
 Класс **Student** имеет следующие поля: **Long id, String name, int age.**
 
-Класс **Faculty** имеет следующие поля: **Long id, String name, String color.**
+Класс **Student** имеет следующие поля: **Long id, String name, String color.**
 
 1. Добавить конструкторы к классам, с помощью которых можно проинициализировать все поля (создать объект класса через new и передать в него все параметры).
 2. Создать методы для получения и изменения переменных класса. Сами переменные должны быть private.
@@ -35,26 +35,26 @@
 Если есть желание, можно добавить свои поля, которые могут быть вам необходимы.
 
 <aside>
-<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3374bb2b-3d5b-4f99-82b3-520ffe6e01d3/Рисунок41.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3374bb2b-3d5b-4f99-82b3-520ffe6e01d3/Рисунок41.png" width="40px" /> **Критерии оценки:** Есть структура приложения, присутствуют каталоги model, service, controller. Созданы два класса Student и Faculty в директории model. В них присутствует конструктор, необходимые поля, геттеры и сеттеры.
+<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3374bb2b-3d5b-4f99-82b3-520ffe6e01d3/Рисунок41.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3374bb2b-3d5b-4f99-82b3-520ffe6e01d3/Рисунок41.png" width="40px" /> **Критерии оценки:** Есть структура приложения, присутствуют каталоги model, service, controller. Созданы два класса Student и Student в директории model. В них присутствует конструктор, необходимые поля, геттеры и сеттеры.
 
 </aside>
 
 **Шаг 3**
 
-1. В каталоге **service** cоздать два класса сервисов для моделей: StudentService и FacultyService.
+1. В каталоге **service** cоздать два класса сервисов для моделей: StudentService и StudentService.
 2. В каждом из них завести HashMap, в котором следует хранить модели. Например Map<Long, Student>.
 3. Также создать счетчик идентификатора, который будет инкрементироваться при каждом добавлении нового объекта модели в HashMap.
 4. В каждом сервисе реализовать CRUD-методы для создания, чтения, изменения и удаления сущностей.
 
 <aside>
-<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7f7cd11-a234-4053-aef3-5b358008510e/Рисунок41.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7f7cd11-a234-4053-aef3-5b358008510e/Рисунок41.png" width="40px" /> **Критерии оценки:** Созданы два сервиса StudentService и FacultyService. В них реализованы CRUD-методы. Сервисы должны хранить состояние путем аккумулирования данных в HashMap.
+<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7f7cd11-a234-4053-aef3-5b358008510e/Рисунок41.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e7f7cd11-a234-4053-aef3-5b358008510e/Рисунок41.png" width="40px" /> **Критерии оценки:** Созданы два сервиса StudentService и StudentService. В них реализованы CRUD-методы. Сервисы должны хранить состояние путем аккумулирования данных в HashMap.
 
 </aside>
 
 **Шаг 4**
 
-1. В каталоге **controller** cоздать два класса контроллеров для сервисов: StudentController и FacultyController.
-2. В них добавить RequestMapping (“student” для StudentController и “faculty” для FacultyController).
+1. В каталоге **controller** cоздать два класса контроллеров для сервисов: StudentController и StudentController.
+2. В них добавить RequestMapping (“student” для StudentController и “Student” для StudentController).
 3. В каждом контроллере реализовать эндпоинты для создания, получения, изменения и удаления сущностей, используя все правила формирования REST-запросов: GET-методы для получения данных, POST — для создания…
 
 <aside>
@@ -70,10 +70,10 @@
 
 1. Добавить фильтрацию факультетов по цвету.
 
-Для этого в FacultyController добавить эндпоинт, который принимает строку (цвет — поле color) и возвращает список факультетов, у которых совпал цвет с переданной строкой.
+Для этого в StudentController добавить эндпоинт, который принимает строку (цвет — поле color) и возвращает список факультетов, у которых совпал цвет с переданной строкой.
 
 <aside>
-<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0146b2b5-af56-4770-8520-e20d41522ddc/Рисунок41.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0146b2b5-af56-4770-8520-e20d41522ddc/Рисунок41.png" width="40px" /> **Критерии оценки:** Созданы два эндпоинта в контроллерах StudentController и FacultyController, которые позволяют фильтровать студентов и факультеты.
+<img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0146b2b5-af56-4770-8520-e20d41522ddc/Рисунок41.png" alt="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0146b2b5-af56-4770-8520-e20d41522ddc/Рисунок41.png" width="40px" /> **Критерии оценки:** Созданы два эндпоинта в контроллерах StudentController и StudentController, которые позволяют фильтровать студентов и факультеты.
 
 </aside>
 
