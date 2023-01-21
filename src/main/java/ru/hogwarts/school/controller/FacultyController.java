@@ -17,8 +17,12 @@ public class FacultyController {
     }
     
     @GetMapping("{id}") ///localhost:8080/Student?id=2
-    public Faculty getFaculty(@PathVariable Long id){
-        return facultyService.findFaculty(id);
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id){
+        Faculty faculty = facultyService.findFaculty(id);
+        if (faculty == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(faculty);
     }
     
     @PostMapping
@@ -27,8 +31,12 @@ public class FacultyController {
     }
     
     @PutMapping
-    public Faculty editFaculty(@RequestBody Faculty faculty){
-        return facultyService.editFaculty(faculty);
+    public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty){
+        faculty = facultyService.editFaculty(faculty);
+        if (faculty == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(faculty);
     }
     @DeleteMapping( "{id}")
     public ResponseEntity<Faculty> deleteStudent(@PathVariable Long id){
@@ -36,12 +44,13 @@ public class FacultyController {
         if (findFaculty == null){
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(facultyService.deleteFaculty(id));
+        facultyService.deleteFaculty(id);
+        return ResponseEntity.ok(findFaculty);
     }
 
     @GetMapping("/color{color}")
-    public List<Faculty> getFacultyByColor(@PathVariable String color) {
-        return facultyService.getFacultyByColor(color);
+    public ResponseEntity<List<Faculty>> getFacultyByColor(@PathVariable String color) {
+        return ResponseEntity.ok(facultyService.getFacultyByColor(color));
     }
     
 }
