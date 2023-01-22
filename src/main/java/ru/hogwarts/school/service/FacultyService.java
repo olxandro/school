@@ -31,11 +31,19 @@ public class FacultyService {
 
     public void deleteFaculty(Long id){
         facultyRepository.deleteById(id);
-
     }
+
     public List<Faculty> getFacultyByColor(String color){
         return facultyRepository.findAll().stream()
                 .filter(faculty -> faculty.getColor().equals(color)).toList();
+    }
+
+    public Faculty findByNameOrColorIgnoreCase(String name, String color){
+        return facultyRepository.findByNameOrColorIgnoreCase(name, color);
+    }
+
+    public String findByName(String name) {
+        return facultyRepository.findFacultyByNameIgnoreCase(name).collectionsStudents();
     }
 
 }

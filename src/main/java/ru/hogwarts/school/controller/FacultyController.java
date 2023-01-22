@@ -24,7 +24,20 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculty);
     }
-    
+
+    @GetMapping("findFaculty")
+    public ResponseEntity<Faculty> findByNameOrColorIgnoreCase(@PathVariable String name, String color){
+        Faculty findFaculty = facultyService.findByNameOrColorIgnoreCase(name, color);
+        if (findFaculty == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(findFaculty);
+    }
+
+    @GetMapping("findAllStudentsByFaculty")
+    public String findByName(@RequestPart String name) {
+        return facultyService.findByName(name);
+    }
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty){
         return facultyService.createFaculty(faculty);

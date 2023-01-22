@@ -6,6 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,24 @@ public class StudentController {
         }
         return ResponseEntity.badRequest().build();
     }
+
+    @GetMapping("findStudentByAge")
+    public ResponseEntity<Collection<Student>> findByAgeBetween(@PathVariable int min, int max){
+        Collection<Student> findStudent = studentService.findByAgeBetween(min, max);
+        if (findStudent != null) {
+            return ResponseEntity.ok(findStudent);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+    @GetMapping("studentFaculty")
+    public ResponseEntity<Faculty> findByName(@RequestParam String name) {
+        Faculty faculty = studentService.findByName(name);
+        if (faculty != null) {
+            return ResponseEntity.ok(faculty);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 
     @PostMapping
     public Student createStudent(@RequestBody Student Student){
