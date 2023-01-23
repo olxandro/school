@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
@@ -7,11 +8,14 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("student")
 public class StudentController {
+    @Autowired
     public final StudentService studentService;
 
     public StudentController(StudentService studentService) {
@@ -27,21 +31,25 @@ public class StudentController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("findStudentByAge")
-    public ResponseEntity<Collection<Student>> findByAgeBetween(@PathVariable int min, int max){
+    @GetMapping("ageBetween")
+    public ResponseEntity<Collection<Student>> findInBetween(
+            @RequestParam Integer min,
+            @RequestParam Integer max) {
         Collection<Student> findStudent = studentService.findByAgeBetween(min, max);
-        if (findStudent != null) {
-            return ResponseEntity.ok(findStudent);
-        }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(Objects.requireNonNullElse(findStudent, Collections.emptyList()));
     }
-    @GetMapping("studentFaculty")
-    public ResponseEntity<Faculty> findByName(@RequestParam String name) {
-        Faculty faculty = studentService.findByName(name);
-        if (faculty != null) {
-            return ResponseEntity.ok(faculty);
+    @GetMapping("{id}/faculty")
+    public ResponseEntity<Faculty> getFacultyByStudent(@PathVariable Long id) {
+        Faculty foundFaculty = studentService.getFacultyByStudent(id);
+        return ResponseEntity.ok(foundFaculty);
+    }
+
+    @GetMapping("{age}")
+    public ResponseEntity<Collection<Student>> getStudentByAge(@PathVariable int age) {
+        if (age > 0) {
+            return ResponseEntity.ok(studentService.findByAge(age));
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(Collections.emptyList());
     }
 
 
@@ -67,10 +75,4 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.ok(findStudent);
     }
-
-    @GetMapping("/age{age}")
-    public ResponseEntity<List<Student>> getStudentByAge(@PathVariable int age){
-        return ResponseEntity.ok(studentService.getStudentByAge(age));
-    }
-    
 }
