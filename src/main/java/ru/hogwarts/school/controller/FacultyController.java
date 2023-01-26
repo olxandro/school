@@ -5,20 +5,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping("faculty") //localhost:8080/faculty
 public class FacultyController {
     @Autowired
     public final FacultyService facultyService;
+    private final FacultyRepository facultyRepository;
 
-    public FacultyController(FacultyService facultyService) {
+    public FacultyController(FacultyService facultyService, FacultyRepository facultyRepository) {
         this.facultyService = facultyService;
+        this.facultyRepository = facultyRepository;
     }
     
     @GetMapping("{id}") ///localhost:8080/Student?id=2
@@ -51,8 +53,11 @@ public class FacultyController {
 
     @GetMapping("{id}/students")
     public ResponseEntity<Collection<Student>> findStudentsByFacultyId(@PathVariable Long id) {
-        Collection<Student> studentsByFaculty = facultyService.findStudentsByFaculty(id);
-        return ResponseEntity.ok(studentsByFaculty);
+        Faculty faculty = facultyRepository.findById(id).orElse(null);
+        if (faculty != null) {
+            return ResponseEntity.ok(faculty.collectionsStudents());
+        }
+        return null;
     }
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty){

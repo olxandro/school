@@ -11,11 +11,9 @@ import java.util.Collection;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final FacultyRepository facultyRepository;
 
     public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
-        this.facultyRepository = facultyRepository;
     }
 
     public Student createStudent(Student student) {
@@ -47,10 +45,5 @@ public class StudentService {
 
     public Collection<Student> findByAgeBetween(int min, int max) {
         return  studentRepository.findByAgeBetween(min, max);
-    }
-
-    public Faculty getFacultyByStudent(Long studentId) {
-        Student student = studentRepository.findStudentById(studentId);
-        return facultyRepository.findFacultyByStudents(student);
     }
 }

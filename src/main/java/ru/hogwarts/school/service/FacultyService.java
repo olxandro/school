@@ -27,14 +27,14 @@ public class FacultyService {
         return facultyRepository.findById(id).orElse(null);
     }
 
-    public Faculty editFaculty(Faculty faculty){
-        if(findFaculty(faculty.getId()) == null){
+    public Faculty editFaculty(Faculty faculty) {
+        if (findFaculty(faculty.getId()) == null) {
             return null;
         }
         return facultyRepository.save(faculty);
     }
 
-    public void deleteFaculty(Long id){
+    public void deleteFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
 
@@ -50,9 +50,4 @@ public class FacultyService {
     public Collection<Faculty> findByNameOrColor(String name, String color) {
         return facultyRepository.findByNameOrColorIgnoreCase(name, color);
     }
-
-    public Collection<Student> findStudentsByFaculty(long id) {
-        return studentRepository.findStudentByFacultyId(id);
-    }
-
 }

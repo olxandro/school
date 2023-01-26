@@ -39,8 +39,8 @@ public class Faculty {
         this.color = color;
     }
 
-    public String collectionsStudents() {
-        return "Студенты" + students;
+    public Collection<Student> collectionsStudents() {
+        return students;
     }
 
     @Override
