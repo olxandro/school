@@ -12,15 +12,15 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
-import static org.apache.commons.io.FilenameUtils.getExtension;
 
 @Service
 @Transactional
 public class AvatarService {
 
-    @Value("{students.avatar.dir.path}")
+    @Value("{avatars.dir.path}")
     private String avatarsDir;
 
     private AvatarRepository avatarRepository;
@@ -35,7 +35,7 @@ public class AvatarService {
         Student student = studentService.findStudent(studentId);
 
         Path filePath = Path.of(avatarsDir, studentId + "." +
-                getExtension(file.getOriginalFilename()));
+                getExtension(Objects.requireNonNull(file.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -57,5 +57,9 @@ public class AvatarService {
 
     public Avatar findAvatar(Long studentId) {
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
+    }
+
+    private String getExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }
