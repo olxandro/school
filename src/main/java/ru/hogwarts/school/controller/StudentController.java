@@ -1,13 +1,17 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
+import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -18,10 +22,12 @@ public class StudentController {
     @Autowired
     private final StudentService studentService;
     private final StudentRepository studentRepository;
+    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService, StudentRepository studentRepository) {
+    public StudentController(StudentService studentService, StudentRepository studentRepository, AvatarService avatarService) {
         this.studentService = studentService;
         this.studentRepository = studentRepository;
+        this.avatarService = avatarService;
     }
 
     @GetMapping("{id}") ///localhost:8080/Student/2
@@ -63,6 +69,12 @@ public class StudentController {
     @PostMapping
     public Student createStudent(@RequestBody Student Student) {
         return studentService.createStudent(Student);
+    }
+
+    @PostMapping(value = "{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadAvatar (@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
+        avatarService.uploadCover(id, avatar);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
