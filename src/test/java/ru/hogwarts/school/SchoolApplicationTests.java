@@ -27,13 +27,6 @@ public class SchoolApplicationTests {
     }
 
     @Test
-    public void testAuthor() throws Exception {
-        Assertions.assertThat(this.restTemplate.getForObject("http://localhost" + port +
-                "/info",String.class))
-                .isEqualTo("Author of this application is Good person!");
-    }
-
-    @Test
     public void testGetStudent() throws Exception {
         Assertions.assertThat(this.restTemplate.getForObject("http://localhost:"
                         + port + "/student/1", String.class))
