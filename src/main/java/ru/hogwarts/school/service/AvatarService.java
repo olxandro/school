@@ -1,6 +1,8 @@
 package ru.hogwarts.school.service;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class AvatarService {
     @Value("{avatars.dir.path}")
     private String avatarsDir;
 
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
     private AvatarRepository avatarRepository;
     private StudentService studentService;
 
@@ -34,6 +37,7 @@ public class AvatarService {
     }
 
     public void uploadCover(Long studentId, MultipartFile file) throws IOException {
+        logger.warn("Method uploadCover was called");
         Student student = studentService.findStudent(studentId);
 
         Path filePath = Path.of(avatarsDir, studentId + "." +
@@ -58,14 +62,17 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long studentId) {
+        logger.info("Method findAvatar was called");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     private String getExtension(String fileName) {
+        logger.info("Method getExtension was called");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public List<Avatar> getAllAvatarsPage(Integer pageNumber, Integer pageSize) {
+        logger.info("Method getAllAvatarsPage was called");
         PageRequest pageRequest = PageRequest.of(pageNumber- 1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
