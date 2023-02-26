@@ -79,6 +79,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findNamesBeginA());
     }
 
+    @GetMapping("age/average")
+    public ResponseEntity<Double> averageAge() {
+        return ResponseEntity.ok(studentService.averageAge());
+    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student Student) {
         return studentService.createStudent(Student);

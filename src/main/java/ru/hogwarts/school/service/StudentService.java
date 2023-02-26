@@ -78,4 +78,9 @@ public class StudentService {
                 .filter(s -> s.charAt(0) == 'A')
                 .sorted().toList();
     }
+    public Double averageAge() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average().orElseThrow();
+    }
 }
