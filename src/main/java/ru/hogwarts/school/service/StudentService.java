@@ -8,6 +8,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -69,5 +70,12 @@ public class StudentService {
     public Collection<Student> findByAgeBetween(int min, int max) {
         logger.warn("Method findByAgeBetween was called");
         return  studentRepository.findByAgeBetween(min, max);
+    }
+
+    public List<String> findNamesBeginA() {
+        return studentRepository.findAll().stream()
+                .map(s -> s.getName().toUpperCase())
+                .filter(s -> s.charAt(0) == 'A')
+                .sorted().toList();
     }
 }
