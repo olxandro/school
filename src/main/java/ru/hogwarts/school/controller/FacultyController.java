@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("faculty") //localhost:8080/faculty
@@ -59,6 +60,12 @@ public class FacultyController {
         }
         return null;
     }
+
+    @GetMapping("names/longest")
+    public ResponseEntity<String> longestNames() {
+        return ResponseEntity.ok(facultyService.longestNames());
+    }
+
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty){
         return facultyService.createFaculty(faculty);
