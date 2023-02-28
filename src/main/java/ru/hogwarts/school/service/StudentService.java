@@ -106,4 +106,22 @@ public class StudentService {
                 .toList().get(index);
     }
 
+    public void studentNamesConsoleSynchro() {
+        printTwoNamesSynchro(0, 1);
+
+        new Thread(() -> {
+            printTwoNamesSynchro(2, 3);
+        }).start();
+
+        new Thread(() -> {
+            printTwoNamesSynchro(4, 5);
+        }).start();
+    }
+
+    public void printTwoNamesSynchro(int index1, int index2) {
+        synchronized (studentRepository) {
+            System.out.println(studentName(index1));
+            System.out.println(studentName(index2));
+        }
+    }
 }

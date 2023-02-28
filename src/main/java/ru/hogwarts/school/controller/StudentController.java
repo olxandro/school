@@ -88,6 +88,12 @@ public class StudentController {
     public void studentNamesConsole() {
         studentService.studentNamesConsole();
     }
+
+    @GetMapping("names-console-synchro")
+    public void studentNamesConsoleSynchro() {
+        studentService.studentNamesConsoleSynchro();
+    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student Student) {
         return studentService.createStudent(Student);
