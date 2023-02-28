@@ -84,6 +84,16 @@ public class StudentController {
         return ResponseEntity.ok(studentService.averageAge());
     }
 
+    @GetMapping("names-console")
+    public void studentNamesConsole() {
+        studentService.studentNamesConsole();
+    }
+
+    @GetMapping("names-console-synchro")
+    public void studentNamesConsoleSynchro() {
+        studentService.studentNamesConsoleSynchro();
+    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student Student) {
         return studentService.createStudent(Student);

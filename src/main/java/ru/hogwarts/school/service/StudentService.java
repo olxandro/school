@@ -83,4 +83,45 @@ public class StudentService {
                 .mapToDouble(Student::getAge)
                 .average().orElseThrow();
     }
+
+    public void studentNamesConsole() {
+
+        System.out.println(studentName(0));
+        System.out.println(studentName(1));
+
+        new Thread(() -> {
+            System.out.println(studentName(2));
+            System.out.println(studentName(3));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentName(4));
+            System.out.println(studentName(5));
+        }).start();
+    }
+
+    public String studentName(int index) {
+        return studentRepository.findAll().stream()
+                .map(Student::getName)
+                .toList().get(index);
+    }
+
+    public void studentNamesConsoleSynchro() {
+        printTwoNamesSynchro(0, 1);
+
+        new Thread(() -> {
+            printTwoNamesSynchro(2, 3);
+        }).start();
+
+        new Thread(() -> {
+            printTwoNamesSynchro(4, 5);
+        }).start();
+    }
+
+    public void printTwoNamesSynchro(int index1, int index2) {
+        synchronized (studentRepository) {
+            System.out.println(studentName(index1));
+            System.out.println(studentName(index2));
+        }
+    }
 }
